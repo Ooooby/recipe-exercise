@@ -16,13 +16,10 @@ public class RecipeController : ControllerBase
         _recipeService = recipeService;
     }
     
-    private readonly string[] _searchTerms = { "chicken", "pasta", "cheese" };
-
     [HttpGet]
-    public IEnumerable<Recipe> Get()
+    public IEnumerable<Recipe> Get(string? searchTerm)
     {
-        var searchTerm = _searchTerms[Random.Shared.Next(_searchTerms.Length)];
-        var recipes = _recipeService.SearchRecipes(searchTerm).ToArray();
+        var recipes = _recipeService.SearchRecipes(searchTerm ?? "").ToArray();
         
         return recipes.Select(r => new Recipe
             {

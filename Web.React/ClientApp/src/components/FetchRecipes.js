@@ -5,11 +5,22 @@ export class FetchRecipes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { recipes: [], loading: true };
+    this.state = { recipes: [], loading: true, searchTerm: '' };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.populateRecipeData();
+  }
+
+  handleInputChange(event) {
+    this.setState({searchTerm: event.target.value});
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    await this.populateRecipeData(this.state.searchTerm);
   }
 
   static renderRecipesTable(recipes) {
@@ -37,16 +48,20 @@ export class FetchRecipes extends Component {
       : FetchRecipes.renderRecipesTable(this.state.recipes);
 
     return (
-      <div>
-        <h1 id="tabelLabel" >Recipes</h1>
-        {contents}
-      </div>
+        <div>
+          <h1 id="tabelLabel">Recipes</h1>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.searchTerm} onChange={this.handleInputChange}/>
+            <button type="submit">Search</button>
+          </form>
+          {contents}
+        </div>
     );
   }
 
   async populateRecipeData() {
-    const response = await fetch('recipe');
+    const response = await fetch(`recipe?searchTerm=${this.state.searchTerm}`);
     const data = await response.json();
-    this.setState({ recipes: data, loading: false });
+    this.setState({recipes: data, loading: false});
   }
 }
