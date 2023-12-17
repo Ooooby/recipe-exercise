@@ -25,7 +25,7 @@ export class FetchRecipes extends Component {
 
   static renderRecipesTable(recipes) {
     return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
+      <table className="table table-striped mt-2" aria-labelledby="tabelLabel">
         <thead>
           <tr>
             <th>Name</th>
@@ -50,9 +50,15 @@ export class FetchRecipes extends Component {
     return (
         <div>
           <h1 id="tabelLabel">Recipes</h1>
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" value={this.state.searchTerm} onChange={this.handleInputChange}/>
-            <button type="submit">Search</button>
+          <form onSubmit={this.handleSubmit} className="row mt-2">
+            <div className="col-4">
+              <input type="text" className="form-control"
+                     value={this.state.searchTerm}
+                     onChange={this.handleInputChange}/>
+            </div>
+            <div className="col-1">
+              <button type="submit" className="btn btn-primary">Search</button>
+            </div>
           </form>
           {contents}
         </div>
