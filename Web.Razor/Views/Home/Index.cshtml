@@ -1,0 +1,30 @@
+﻿@model Web.Razor.Models.IndexModel
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ooooby Recipe Exercise</h1>
+    
+    <form method="post" class="row justify-content-center mt-4">
+        <div class="col-5">
+            <input type="text" class="form-control" id="SearchTerm" name="SearchTerm" placeholder="Search for a recipe...">
+        </div>
+    
+        <div class="col-1">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    @if (Model.RecipeNames.Length > 0)
+    {
+        <div class="row justify-content-center mt-2">
+            <ul class="list-group col-6">
+                @foreach(var recipeName in Model.RecipeNames)
+                {
+                    <li class="list-group-item">@recipeName</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
